@@ -9,5 +9,10 @@
 .global _flexram_bank_config
 .global _estack
 
-startup:
+.section ".text"
+
+.global _startup
+
+_startup:
+    mov r1, #10;
     
