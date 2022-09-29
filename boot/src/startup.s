@@ -11,8 +11,7 @@
 
 .section ".text"
 
-.global _startup
+.global startup
 
-_startup:
-    mov r1, #10;
-    
+startup:
+    mov r1, #10

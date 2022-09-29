@@ -1,9 +1,11 @@
-CC = arm-none-eabi-gcc
-LD = arm-none-eabi-ld
-AS = $(CC)
-OBJCOPY = arm-none-eabi-objcopy
-OBJDUMP = arm-none-eabi-objdump
-SIZE = arm-none-eabi-size
+KIT = arm-none-eabi
+
+CC = $(KIT)-gcc
+LD = $(KIT)-ld
+AS = $(KIT)-as
+OBJCOPY = $(KIT)-objcopy
+OBJDUMP = $(KIT)-objdump
+SIZE = $(KIT)-size
 LOADER = teensy_loader_cli
 
 OUTFILE = firmware
@@ -19,7 +21,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CFLAGS = -O3 -Wall -Werror -mcpu=cortex-m7 -mthumb $(INC_FLAGS)
-ASFLAGS = -S -Wall -Werror -mcpu=cortex-m7 -mthumb $(INC_FLAGS)
+ASFLAGS = -mcpu=cortex-m7 -Wall #-Wall -Werror -mthumb $(INC_FLAGS)
 LDFLAGS = -Wl,--gc-sections,--print-gc-sections,--print-memory-usage -nostdlib -nostartfiles -Tboot/src/imxrt1062.ld
 
 $(BUILD_DIR)/$(OUTFILE).hex: $(BUILD_DIR)/$(OUTFILE).elf

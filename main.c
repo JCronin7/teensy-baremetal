@@ -8,14 +8,16 @@ int main()
     IOMUXC_GPR_GPR27 = 0xFFFFFFFF;
     GPIO7_GDIR |= (1 << 3);
 
-    for(;;) {
+    for (;;)
+    {
         volatile unsigned int i = 0;
 
         // Set PIN 13 HIGH
         GPIO7_DR_SET = (1 << 3);
 
         // Poor man's delay
-        while(i < 10000000) {
+        while (i < 10000000)
+        {
             i++;
         }
 
@@ -25,7 +27,8 @@ int main()
         GPIO7_DR_CLEAR = (1 << 3);
 
         // Poor man's delay
-        while(i < 10000000) {
+        while (i < 10000000)
+        {
             i++;
         }
     }
