@@ -13,7 +13,7 @@ SECTIONS
     .text.progmem : {
         KEEP(*(.flashconfig))
         FILL(0xFF)
-        . = ORIGIN(FLASH) + 0x1000; /* Defines end of flash? */
+        . = ORIGIN(FLASH) + 0x1000;
         KEEP(*(.ivt))
         KEEP(*(.bootdata))
         KEEP(*(.vectors))

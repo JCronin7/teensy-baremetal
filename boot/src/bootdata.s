@@ -1,36 +1,40 @@
 /**************************************************************************
- * @file     startup_<Device>.S
+ * @file     bootdata.s
  * @brief    CMSIS-Core(M) Device Startup File for
  *           Device <Device> (using Arm Compiler 6 with scatter file)
  * @version  V1.0.0
- * @date     20. January 2021
+ * @date     1. October 2022
  *************************************************************************/
 
-.syntax unified
-.arch   armv7e-m
+    .syntax unified
+    .arch   armv7e-m
 
-.global startup
-.global _estack
-.global _flashimagelen
+    .global __startup
+    .global _estack
+    .global _flashimagelen
 
-.section .vectors
-.global vector_table
-.align 2
+    .section .vectors
+    .global vector_table
+    .align 4
 vector_table:
     .word   0x20010000
-    .word   startup
+    .word   __startup
 
-.section .bootdata
-.global BootData
-.align 2
+	.size	vector_table, . - vector_table
+
+    .section .bootdata
+    .global BootData
+    .align 4
 BootData:
     .word   0x60000000
     .word   _flashimagelen
     .word   0
 
-.section .ivt
-.global ImageVectorTable
-.align 2
+	.size	BootData, . - BootData
+
+    .section .ivt
+    .global ImageVectorTable
+    .align 4
 ImageVectorTable:
     .word   0x402000D1          // header
     .word   vector_table        // docs are wrong, needs to be vec table, not start addr
@@ -41,11 +45,13 @@ ImageVectorTable:
     .word   0                   // command sequence file
     .word   0                   // reserved
 
-// 448 byte common FlexSPI configuration block, 8.6.3.1 page 223 (RT1060 rev 0)
-// MCU_Flashloader_Reference_Manual.pdf, 8.2.1, Table 8-2, page 72-75
-.section .flashconfig
-.global FlexSPI_NOR_Config
-.align 2
+	.size	ImageVectorTable, . - ImageVectorTable
+
+    // 448 byte common FlexSPI configuration block, 8.6.3.1 page 223 (RT1060 rev 0)
+    // MCU_Flashloader_Reference_Manual.pdf, 8.2.1, Table 8-2, page 72-75
+    .section .flashconfig
+    .global FlexSPI_NOR_Config
+    .align 4
 FlexSPI_NOR_Config:
     .word   0x42464346  // Tag 0x00
     .word   0x56010000  // Version
@@ -207,3 +213,5 @@ FlexSPI_NOR_Config:
     .word   0           // reserved
     .word   0           // reserved
     .word   0           // reserved
+
+	.size	FlexSPI_NOR_Config, . - FlexSPI_NOR_Config
