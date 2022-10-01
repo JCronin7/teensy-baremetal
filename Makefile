@@ -21,7 +21,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CFLAGS = -O3 -Wall -Werror -mcpu=cortex-m7 -mthumb $(INC_FLAGS)
-ASFLAGS = -mcpu=cortex-m7 -Wall #-Wall -Werror -mthumb $(INC_FLAGS)
+ASFLAGS = -mcpu=cortex-m7 -Wall -mthumb $(INC_FLAGS)
 LDFLAGS = -Wl,--gc-sections,--print-gc-sections,--print-memory-usage -nostdlib -nostartfiles -Tboot/src/imxrt1062.ld
 
 $(BUILD_DIR)/$(OUTFILE).hex: $(BUILD_DIR)/$(OUTFILE).elf
